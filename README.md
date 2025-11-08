@@ -29,9 +29,9 @@ A production-quality multi-user drawing application with real-time synchronizati
 
 1. Clone the repository:
 `
-git clone <https://github.com/krishnasingh-09/Canvas.git> `
+git clone <https://github.com/krishnasingh-09/CollaborativeCanvas.git> `
 `
-cd collaborative-canvas
+cd CollaborativeCanvas
 `
 
 2. Install dependencies:
