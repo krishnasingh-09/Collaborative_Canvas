@@ -19,6 +19,15 @@ A production-quality multi-user drawing application with real-time synchronizati
 - **Real-time Communication**: WebSockets via Socket.io
 - **Architecture**: Event-driven, client-server model
 
+## Live Demo
+
+Try the app here: **https://project-production-4d50.up.railway.app**
+
+✅ No installation required  
+✅ Works on desktop & tablet  
+✅ Supports real-time multi-user drawing  
+
+
 ## Getting Started
 
 ### Prerequisites
