@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Drawing Canvas</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Load socket.io from local server before scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="header-left">
+        <h1>Collaborative Drawing Canvas</h1>
+        <div class="current-room" id="currentRoom">Room: default-room</div>
+      </div>
+      <div class="connection-status" id="connectionStatus">Connecting...</div>
+    </header>
+
+    <div class="main-content">
+      <aside class="toolbar">
+        <div class="toolbar-section">
+          <h3>Tool</h3>
+          <div class="button-group">
+            <button class="tool-btn active" id="brushTool" data-tool="brush">
+              <span class="icon">🖌️</span> Brush
+            </button>
+            <button class="tool-btn" id="eraserTool" data-tool="eraser">
+              <span class="icon">🧹</span> Eraser
+            </button>
+          </div>
+        </div>
+
+        <div class="toolbar-section">
+          <h3>Stroke Width</h3>
+          <div class="slider-container">
+            <input type="range" id="strokeWidth" min="1" max="50" value="3" class="slider">
+            <span class="slider-value" id="strokeValue">3px</span>
+          </div>
+        </div>
+
+        <div class="toolbar-section">
+          <h3>Color</h3>
+          <div class="color-picker-container">
+            <input type="color" id="colorPicker" value="#000000" class="color-picker">
+            <div class="color-presets">
+              <button class="color-preset" style="background-color: #000000;" data-color="#000000"></button>
+              <button class="color-preset" style="background-color: #FF0000;" data-color="#FF0000"></button>
+              <button class="color-preset" style="background-color: #00FF00;" data-color="#00FF00"></button>
+              <button class="color-preset" style="background-color: #0000FF;" data-color="#0000FF"></button>
+              <button class="color-preset" style="background-color: #FFFF00;" data-color="#FFFF00"></button>
+              <button class="color-preset" style="background-color: #FF00FF;" data-color="#FF00FF"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="toolbar-section">
+          <h3>Actions</h3>
+          <div class="button-group vertical">
+            <button class="action-btn" id="undoBtn">↶ Undo</button>
+            <button class="action-btn" id="redoBtn">↷ Redo</button>
+            <button class="action-btn danger" id="clearBtn">🗑️ Clear</button>
+          </div>
+        </div>
+
+        <!-- Replaced old room management with enhanced room controls -->
+        <div class="toolbar-section">
+          <h3>Room Management</h3>
+          <div class="button-group vertical">
+            <button class="action-btn" id="createRoomBtn">Create Room</button>
+            <button class="action-btn" id="joinExistingBtn">Join Room</button>
+            <button class="action-btn" id="copyRoomLinkBtn">Copy Join Link</button>
+          </div>
+        </div>
+
+        <!-- Enhanced member list display -->
+        <div class="toolbar-section">
+          <h3>Members Online</h3>
+          <div id="usersList" class="users-list"></div>
+        </div>
+      </aside>
+
+      <main class="canvas-container">
+        <canvas id="drawingCanvas"></canvas>
+        <div id="cursorsLayer" class="cursors-layer"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Added modal for room creation and joining -->
+  <div id="roomModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeRoomModal">&times;</button>
+      <h2 id="modalTitle">Create New Room</h2>
+      
+      <div id="createRoomForm" class="form-group">
+        <label for="newRoomName">Room Name</label>
+        <input type="text" id="newRoomName" placeholder="My Awesome Room" class="form-input">
+        <label for="yourName">Your Name</label>
+        <input type="text" id="yourName" placeholder="Enter your name" class="form-input">
+        <button class="action-btn" id="confirmCreateBtn">Create Room</button>
+      </div>
+
+      <div id="joinRoomForm" class="form-group" style="display: none;">
+        <label for="joinRoomCode">Room Code</label>
+        <input type="text" id="joinRoomCode" placeholder="Enter room code" class="form-input">
+        <label for="joinName">Your Name</label>
+        <input type="text" id="joinName" placeholder="Enter your name" class="form-input">
+        <button class="action-btn" id="confirmJoinBtn">Join Room</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Added modal for copying room link -->
+  <div id="linkModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeLinkModal">&times;</button>
+      <h2>Invite Others</h2>
+      <p>Share this link with others to join your room:</p>
+      <div class="link-container">
+        <input type="text" id="joinLink" readonly class="form-input">
+        <button class="action-btn" id="copyLinkBtn">Copy Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load scripts in correct order -->
+  <script src="canvas.js"></script>
+  <script src="websocket.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
