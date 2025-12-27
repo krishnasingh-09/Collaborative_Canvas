@@ -1,35 +1,51 @@
 {
-  "name": "collaborative-drawing-canvas",
+  "name": "next-dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server/server.js",
-    "start": "node server/server.js",
-    "build": "echo 'No build required for vanilla Node.js app'"
+    "dev": "next dev",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "express": "5.1.0",
-    "socket.io": "4.8.1",
-    "http": "0.0.1-security",
-    "path": "0.12.7",
-    "next": "16.0.1",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
+    "@clerk/elements": "^0.14.6",
+    "@clerk/nextjs": "^5.7.5",
+    "@hookform/resolvers": "^3.9.0",
+    "@prisma/client": "^5.19.1",
+    "@types/react-big-calendar": "^1.8.9",
+    "moment": "^2.30.1",
+    "next": "^14.2.26",
+    "next-cloudinary": "^6.16.0",
+    "prisma": "^5.19.1",
+    "react": "^18",
+    "react-big-calendar": "^1.13.2",
+    "react-calendar": "^5.0.0",
+    "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
+    "react-toastify": "^10.0.6",
+    "recharts": "^2.12.7",
+    "zod": "^3.23.8",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
-    "lucide-react": "0.553.0",
-    "tailwind-merge": "3.3.1",
+    "lucide-react": "0.562.0",
+    "tailwind-merge": "3.4.0",
     "tailwindcss-animate": "1.0.7"
   },
-  "engines": {
-    "node": "22.x"
-  },
   "devDependencies": {
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "@types/node": "24.10.0",
-    "tailwindcss": "4.1.17",
-    "typescript": "5.9.3",
-    "postcss": "8.5.6"
+    "@next/bundle-analyzer": "^15.3.2",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }
